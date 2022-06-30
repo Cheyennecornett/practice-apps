@@ -5,14 +5,17 @@ import Add from './components/Add.jsx'
 import WordList from './components/WordList.jsx';
 import axios from 'axios';
 import Word from './components/Word.jsx'
-
+import MyAdd from './components/MyAdd.jsx'
+import MyWordList from './components/MyWordList.jsx';
+import MyWord from './components/MyWord.jsx'
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: []
+      words: [],
+      myWords: [{word:'test', def: 'a hard thing'}, {word: 'cat', def: 'a cute thing'}]
 
     }
 
@@ -40,6 +43,7 @@ class App extends React.Component {
     return axios.get('/glossary').then(({ data }) => {
       this.setState({
         words: data
+
       });
     });
   }
@@ -56,14 +60,40 @@ class App extends React.Component {
     })
   }
 
+  myAdd(newWord) {
+    console.log('in myAdd:', newWord);
+    var newData = this.state.myWords.concat(newWord);
+   // this.state.myWords.push(newWord);
+    this.setState({
+
+      myWords: newData
+    // axios
+    // .post( '/glossary', newWord)
+    // .then(() => {
+    //   return this.getWords();
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // });
+    });
+   // console.log(def);
+  }
+
+
+
   render() {
     return (
     <div>
-      <h1>My Words</h1>
+      <h1>Real Words</h1>
       <br></br>
       <Add onAdd={this.add.bind(this)}/>
-
+       <br></br>
       <WordList words={this.state.words} onDelete={this.onDelete.bind(this)}/>
+       <br></br>
+      <h1>My Words</h1>
+      <br></br>
+      <MyAdd addOn={this.myAdd.bind(this)}/>
+      <MyWordList words={this.state.myWords} onDelete={this.onDelete.bind(this)}/>
     </div>)
   }
 }

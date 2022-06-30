@@ -19,7 +19,7 @@ let getWord = (word, cb) => {
 
   axios(options)
   .then(response => {
-    console.log('API word INFO:', response.data);
+   // console.log('API word INFO:', response.data);
     var words = [];
 
     response.data.forEach(word => {
@@ -38,4 +38,6 @@ let getWord = (word, cb) => {
     console.log('err in axios helper get request', err);
   })
 };
+
+
 module.exports.getWord = getWord;

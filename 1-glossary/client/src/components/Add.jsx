@@ -5,12 +5,14 @@ class Add extends React.Component {
     super(props);
     this.state = {
       term: ''
+     // def: ''
     }
   }
 
   onChange (e) {
     this.setState({
       term: e.target.value
+
     });
   }
 
