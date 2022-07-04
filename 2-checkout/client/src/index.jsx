@@ -3,7 +3,9 @@ import { render } from "react-dom";
 import ReactDOM from 'react-dom';
 import Form1 from './components/Form1.jsx'
 import Form2 from './components/Form2.jsx'
+import Form3 from './components/Form3.jsx'
 import HomePage from './components/HomePage.jsx'
+import axios from 'axios'
 
 
 
@@ -48,7 +50,7 @@ class App extends React.Component {
     Form2: false,
     Form3: true
     })
-    console.log('openForm3:',this.state)
+    //console.log('openForm3:',this.state)
   }
 
   checkedOut() {
@@ -56,7 +58,7 @@ class App extends React.Component {
       HomePage: true,
       Form3: false
     })
-    console.log('checkedOut:',this.state)
+    //console.log('checkedOut:',this.state)
 
   }
 
@@ -78,6 +80,12 @@ class App extends React.Component {
             <Form2 open3={this.openForm3.bind(this)}/>
           </div>)
         }
+        if (this.state.Form3 === true) {
+          return (<div>
+            <Form3 finish={this.checkedOut.bind(this)}/>
+          </div>)
+        }
+
        }
 
 

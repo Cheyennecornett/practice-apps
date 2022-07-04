@@ -1,9 +1,9 @@
 //F3 collects credit card #, expiry date, CVV, and billing zip code.
 
-
+import axios from 'axios'
 import React from 'react';
 
-class Form1 extends React.Component {
+class Form3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,29 +11,29 @@ class Form1 extends React.Component {
       creditCardNumber: '',
       expiryDate: '',
       cvv: '',
-      billingZip: ''
+      billingZip: '',
       form3Complete: false
     }
   }
 
-  onCreditCardChange (e) {
+  onCreditCardChange(e) {
     this.setState({
       creditCardNumber: e.target.value
     });
   }
-  onExpiryChange (e) {
-   this.setState({
+  onExpiryChange(e) {
+    this.setState({
       expiryDate: e.target.value
     });
   }
 
-  onCvvChange (e) {
-     this.setState({
-       cvv: e.target.value
-     });
-   }
+  onCvvChange(e) {
+    this.setState({
+      cvv: e.target.value
+    });
+  }
 
-   onBillingZipChange (e) {
+  onBillingZipChange(e) {
     this.setState({
       billingZip: e.target.value
     });
@@ -55,36 +55,50 @@ class Form1 extends React.Component {
   // }
 
   onNext() {
-    var form1Obj = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password
-    }
-    console.log('next clicked', form1Obj)
-    this.props.open2();
+    var form3Obj = {
+      form: 'form3',
+      creditcard: this.state.creditCardNumber,
+      expiry: this.state.expiryDate,
+      cvv: this.state.cvv,
+      billingZip: this.state.billingZip
+  }
+  axios
+    .post( '/checkout', form3Obj)
+    .then(() => {
+      console.log('inside then after axios form3 post')
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    console.log('next clicked', form3Obj)
+    this.props.finish();
   }
 
 
-  render() {
-    return (<div>
-     <form>
-     Name: <input value={this.state.name} onChange={this.onNameChange.bind(this)}/>
+render() {
+  return (<div>
+    <form>
+      Credit Card Number: <input value={this.state.creditCardNumber} onChange={this.onCreditCardChange.bind(this)} />
       {/* <button onClick={this.formAdd.bind(this)}> Submit </button> */}
       <br></br>
       <br></br>
-      Email: <input value={this.state.email} onChange={this.onEmailChange.bind(this)}/>
+      Expiration Date: <input value={this.state.expiryDate} onChange={this.onExpiryChange.bind(this)} />
       {/* <button onClick={this.formAdd.bind(this)}> Submit </button> */}
       <br></br>
       <br></br>
-      Password: <input value={this.state.password} onChange={this.onPasswordChange.bind(this)}/>
+      CVV: <input value={this.state.password} onChange={this.onCvvChange.bind(this)} />
       {/* <button onClick={this.form1Add.bind(this)}> Submit </button> */}
-     </form>
-     <br></br>
-     <br></br>
+      <br></br>
+      <br></br>
+      Billing Zip Code: <input value={this.state.billingZip} onChange={this.onBillingZipChange.bind(this)} />
+    </form>
+    <br></br>
+    <br></br>
 
-     <button onClick={this.onNext.bind(this)}> Next </button>
-    </div>)
-  }
+    <button onClick={this.onNext.bind(this)}> Purchase </button>
+  </div>)
+}
 }
 
 export default Form3;

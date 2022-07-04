@@ -1,4 +1,6 @@
 import React from 'react';
+//import db from ''
+import axios from 'axios'
 
 class Form1 extends React.Component {
   constructor(props) {
@@ -45,14 +47,28 @@ class Form1 extends React.Component {
   // }
 
   onNext() {
+
     var form1Obj = {
+      form: 'form1',
       name: this.state.name,
       email: this.state.email,
       password: this.state.password
     }
-    console.log('next clicked', form1Obj)
-    this.props.open2();
-  }
+
+     axios
+     .post( '/checkout', form1Obj)
+     .then(() => {
+       console.log('inside then after axios form1 post')
+     })
+     .catch(err => {
+       console.log(err);
+     });
+
+     this.props.open2();
+   }
+    //console.log('next clicked', form1Obj)
+
+
 
 
   render() {
@@ -76,5 +92,6 @@ class Form1 extends React.Component {
     </div>)
   }
 }
+
 
 export default Form1;
